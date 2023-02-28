@@ -12,7 +12,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/beautiful-places', {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
-    console.log("Database connected");
+  console.log("Database connected");
 });
 
 const app = express();
@@ -25,7 +25,12 @@ app.get('/', (req, res) => {
 
 app.get('/places', async (req, res) => {
   const places = await Place.find({});
-  res.render('places/index', {places});
+  res.render('places/index', { places });
+});
+
+app.get('/places/:id', async (req, res) => {
+  const place = await Place.findById(req.params.id);
+  res.render('places/show', { place });
 });
 
 app.listen(3000, () => {

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const placeSchema = new Schema({
-  title: String,
+  name: String,
   description: String,
   price: Number,
   location: String

@@ -23,10 +23,9 @@ app.get('/', (req, res) => {
   res.render('home');
 });
 
-app.get('/place', async (req, res) => {
-  const newPlace = new Place({title: 'London Eye', description: 'Must-see place in London'});
-  newPlace.save;
-  res.send(newPlace);
+app.get('/places', async (req, res) => {
+  const places = await Place.find({});
+  res.render('places/index', {places});
 });
 
 app.listen(3000, () => {

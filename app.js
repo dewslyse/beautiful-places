@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import methodOverride from 'method-override';
 import Place from './models/place.js';
 
 mongoose.set('strictQuery', false);
@@ -20,6 +21,7 @@ const app = express();
 app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 
 app.get('/', (req, res) => {
   res.render('home');
@@ -43,6 +45,17 @@ app.post('/places', async (req, res) => {
 app.get('/places/:id', async (req, res) => {
   const place = await Place.findById(req.params.id);
   res.render('places/show', { place });
+});
+
+app.get('/places/:id/edit', async (req, res) => {
+  const place = await Place.findById(req.params.id);
+  res.render('places/edit', { place });
+});
+
+app.put('/places/:id', async (req, res) => {
+  const { id } = req.params;
+  const place = await Place.findByIdAndUpdate(id, { ...req.body.place });
+  res.redirect(`/places/${place._id}`);
 });
 
 app.listen(3000, () => {

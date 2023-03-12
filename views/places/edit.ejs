@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Place</title>
+</head>
+
+<body>
+  <h1>Edit a Beautiful Place</h1>
+
+  <form action="/places/<%= place._id %>?_method=PUT" method="POST">
+    <div>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="place[name]" value="<%= place.name %>" />
+    </div>
+    <div>
+      <label for="location">Location</label>
+      <input type="text" id="location" name="place[location]" value="<%= place.location %>" />
+    </div>
+    <div>
+      <label for="description">Description</label>
+      <input type="text" id="description" name="place[description]" value="<%= place.description %>" />
+    </div>
+    <button type="submit">Update Place</button>
+  </form>
+
+  <a href="/places/<%= place._id %>">Back to Beautiful place</a>
+</body>
+
+</html>

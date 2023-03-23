@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import methodOverride from 'method-override';
+import ejsMate from 'ejs-mate';
 import Place from './models/place.js';
 
 mongoose.set('strictQuery', false);
@@ -18,6 +19,7 @@ db.once("open", () => {
 
 const app = express();
 
+app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: true }));

@@ -2,14 +2,25 @@
 
   <h1>All Beautiful Places</h1>
 
-  <ul>
-    <% for (let place of places) { %>
-      <li>
-        <a href="/places/<%= place._id %>">
-          <%= place.name %>
-        </a>
-      </li>
-      <% } %>
-  </ul>
+  <div class="mt-3">
+    <a href="/places/new" class="btn btn-outline-primary">New Place</a>
+  </div>
 
-  <a href="/places/new">New Place</a>
+  <div class="row row-cols-1 row-cols-md-2 g-5 my-2">
+    <% for (let place of places) { %>
+      <div class="col">
+        <div class="card h-100">
+          <img src="<%= place.image %>" class="card-img-top object-fit-cover" style="height: 18rem;" alt="">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">
+              <%= place.name %>
+            </h5>
+            <p class="card-text">
+              <%= place.description %>
+            </p>
+            <a href="/places/<%= place._id %>" class="btn btn-success mt-auto">View <%= place.name %></a>
+          </div>
+        </div>
+      </div>
+      <% } %>
+  </div>

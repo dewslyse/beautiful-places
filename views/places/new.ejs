@@ -1,21 +1,43 @@
 <% layout('layouts/boilerplate') %>
 
-  <h1>Add a Beautiful Place</h1>
+  <div class="row">
+    <h1 class="text-center mb-3">Add a Place</h1>
 
-  <form action="/places" method="POST">
-    <div>
-      <label for="name">Name</label>
-      <input type="text" id="name" name="place[name]" />
-    </div>
-    <div>
-      <label for="location">Location</label>
-      <input type="text" id="location" name="place[location]" />
-    </div>
-    <div>
-      <label for="description">Description</label>
-      <input type="text" id="description" name="place[description]" />
-    </div>
-    <button type="submit">Add Place</button>
-  </form>
+    <div class="col-6 offset-3">
+      <form action="/places" method="POST">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input class="form-control" type="text" id="name" name="place[name]" />
+        </div>
 
-  <a href="/places">All places</a>
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input class="form-control" type="text" id="location" name="place[location]" />
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" type="text" id="description" name="place[description]" rows="3"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="image">Image Url</label>
+          <input class="form-control" type="text" id="image" name="place[image]">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="price">Price</label>
+          <div class="input-group">
+            <span class="input-group-text" id="price-label">£</span>
+            <input type="text" class="form-control" id="price" placeholder="0.00" name="place[price]">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <button type="submit" class="btn btn-success">Add Place</button>
+        </div>
+      </form>
+
+      <a href="/places">All places</a>
+    </div>
+  </div>

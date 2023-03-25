@@ -1,24 +1,28 @@
 <% layout('layouts/boilerplate') %>
 
-  <img src="<%= place.image %>" alt="">
-  <h1>
-    <%= place.name %>
-  </h1>
-  <h2>
-    <%= place.location %>
-  </h2>
-  <p>
-    <%= place.description %>
-  </p>
-
-  <div>
-    <a href="/places/<%= place._id %>/edit">Edit</a>
+  <div class="row">
+    <div class="col-6 offset-3">
+      <div class="card mb-3">
+        <img src="<%= place.image %>" class="card-img-top" alt="">
+        <div class="card-body">
+          <h3 class="card-title">
+            <%= place.name %>
+          </h3>
+          <p class="card-text"><small class="text-body-secondary">
+              <%= place.location %>
+            </small></p>
+          <p class="card-text">
+            <%= place.description %>
+          </p>
+          <p class="card-text">£
+            <%= place.price %>/night
+          </p>
+        </div>
+        <div class="card-footer">
+          <a class="btn btn-info" href="/places/<%= place._id %>/edit">Edit</a>
+          <form class="d-inline" action="/places/<%= place._id %>?_method=DELETE" method="POST">
+            <input class="btn btn-danger" type="submit" value="Delete">
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div>
-    <form action="/places/<%= place._id %>?_method=DELETE" method="POST">
-      <input type="submit" value="Delete">
-    </form>
-  </div>
-
-  <a href="/places">All places</a>

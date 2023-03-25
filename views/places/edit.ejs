@@ -1,21 +1,45 @@
 <% layout('layouts/boilerplate') %>
 
-  <h1>Edit a Beautiful Place</h1>
+  <div class="row">
+    <h1 class="text-center mb-3">Edit a Place</h1>
 
-  <form action="/places/<%= place._id %>?_method=PUT" method="POST">
-    <div>
-      <label for="name">Name</label>
-      <input type="text" id="name" name="place[name]" value="<%= place.name %>" />
-    </div>
-    <div>
-      <label for="location">Location</label>
-      <input type="text" id="location" name="place[location]" value="<%= place.location %>" />
-    </div>
-    <div>
-      <label for="description">Description</label>
-      <input type="text" id="description" name="place[description]" value="<%= place.description %>" />
-    </div>
-    <button type="submit">Update Place</button>
-  </form>
+    <div class="col-6 offset-3">
+      <form action="/places/<%= place._id %>?_method=PUT" method="POST">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input class="form-control" type="text" id="name" name="place[name]" value="<%= place.name %>" />
+        </div>
 
-  <a href="/places/<%= place._id %>">Back to Beautiful place</a>
+        <div class="mb-3">
+          <label class="form-label" for="location">Location</label>
+          <input class="form-control" type="text" id="location" name="place[location]" value="<%= place.location %>" />
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" type="text" id="description" name="place[description]"
+            rows="3"><%= place.description %></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="image">Image Url</label>
+          <input class="form-control" type="text" id="image" name="place[image]" value="<%= place.image %>">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="price">Price</label>
+          <div class="input-group">
+            <span class="input-group-text" id="price-label">£</span>
+            <input type="text" class="form-control" id="price" placeholder="0.00" name="place[price]"
+              value="<%= place.price %>">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <button type="submit" class="btn btn-success">Update Place</button>
+        </div>
+      </form>
+
+      <a href="/places/<%= place._id %>">Back to Beautiful place</a>
+    </div>
+  </div>

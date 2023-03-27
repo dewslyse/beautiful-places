@@ -4,32 +4,48 @@
     <h1 class="text-center mb-3">Add a Place</h1>
 
     <div class="col-6 offset-3">
-      <form action="/places" method="POST">
+      <form action="/places" method="POST" novalidate class="form-validation">
         <div class="mb-3">
           <label for="name" class="form-label">Name</label>
-          <input class="form-control" type="text" id="name" name="place[name]" />
+          <input class="form-control" type="text" id="name" name="place[name]" required>
+          <div class="invalid-feedback">
+            Field cannot be blank.
+          </div>
         </div>
 
         <div class="mb-3">
           <label for="location" class="form-label">Location</label>
-          <input class="form-control" type="text" id="location" name="place[location]" />
+          <input class="form-control" type="text" id="location" name="place[location]" required>
+          <div class="invalid-feedback">
+            Field cannot be blank.
+          </div>
         </div>
 
         <div class="mb-3">
           <label for="description" class="form-label">Description</label>
-          <textarea class="form-control" type="text" id="description" name="place[description]" rows="3"></textarea>
+          <textarea class="form-control" type="text" id="description" name="place[description]" rows="3"
+            required></textarea>
+          <div class="invalid-feedback">
+            Field cannot be blank.
+          </div>
         </div>
 
         <div class="mb-3">
           <label class="form-label" for="image">Image Url</label>
-          <input class="form-control" type="text" id="image" name="place[image]">
+          <input class="form-control" type="text" id="image" name="place[image]" required>
+          <div class="invalid-feedback">
+            Field cannot be blank.
+          </div>
         </div>
 
         <div class="mb-3">
           <label class="form-label" for="price">Price</label>
           <div class="input-group">
             <span class="input-group-text" id="price-label">£</span>
-            <input type="text" class="form-control" id="price" placeholder="0.00" name="place[price]">
+            <input type="text" class="form-control" id="price" placeholder="0.00" name="place[price]" required>
+            <div class="invalid-feedback">
+              Field cannot be blank.
+            </div>
           </div>
         </div>
 
@@ -41,3 +57,22 @@
       <a href="/places">All places</a>
     </div>
   </div>
+
+  <!-- <script>
+    (() => {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      const forms = document.querySelectorAll('.form-validation')
+
+      // Loop over them and prevent submission
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+    })()
+  </script> -->

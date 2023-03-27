@@ -4,26 +4,27 @@
     <h1 class="text-center mb-3">Edit a Place</h1>
 
     <div class="col-6 offset-3">
-      <form action="/places/<%= place._id %>?_method=PUT" method="POST">
+      <form action="/places/<%= place._id %>?_method=PUT" method="POST" novalidate class="form-validation">
         <div class="mb-3">
           <label for="name" class="form-label">Name</label>
-          <input class="form-control" type="text" id="name" name="place[name]" value="<%= place.name %>" />
+          <input class="form-control" type="text" id="name" name="place[name]" value="<%= place.name %>" required>
         </div>
 
         <div class="mb-3">
           <label class="form-label" for="location">Location</label>
-          <input class="form-control" type="text" id="location" name="place[location]" value="<%= place.location %>" />
+          <input class="form-control" type="text" id="location" name="place[location]" value="<%= place.location %>"
+            required>
         </div>
 
         <div class="mb-3">
           <label for="description" class="form-label">Description</label>
-          <textarea class="form-control" type="text" id="description" name="place[description]"
-            rows="3"><%= place.description %></textarea>
+          <textarea class="form-control" type="text" id="description" name="place[description]" rows="3"
+            required><%= place.description %></textarea>
         </div>
 
         <div class="mb-3">
           <label class="form-label" for="image">Image Url</label>
-          <input class="form-control" type="text" id="image" name="place[image]" value="<%= place.image %>">
+          <input class="form-control" type="text" id="image" name="place[image]" value="<%= place.image %>" required>
         </div>
 
         <div class="mb-3">
@@ -31,7 +32,7 @@
           <div class="input-group">
             <span class="input-group-text" id="price-label">£</span>
             <input type="text" class="form-control" id="price" placeholder="0.00" name="place[price]"
-              value="<%= place.price %>">
+              value="<%= place.price %>" required>
           </div>
         </div>
 

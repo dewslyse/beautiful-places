@@ -5,7 +5,7 @@ import ejsMate from 'ejs-mate';
 import Place from './models/place.js';
 import asyncWrapper from './helpers/asyncWrapper.js';
 import ExpressError from './helpers/ExpressError.js';
-import Joi from 'joi';
+import placeSchema from './schemas.js';
 
 mongoose.set('strictQuery', false);
 
@@ -28,6 +28,16 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
+const validatePlace = (req, res, next) => {
+  const { error } = placeSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(e => e.message).join(',');
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+
 app.get('/', (req, res) => {
   res.render('home');
 });
@@ -41,24 +51,7 @@ app.get('/places/new', (req, res) => {
   res.render('places/new');
 });
 
-app.post('/places', asyncWrapper(async (req, res, next) => {
-
-  const placeSchema = Joi.object({
-    place: Joi.object({
-      name: Joi.string().required(),
-      description: Joi.string().required(),
-      location: Joi.string().required(),
-      image: Joi.string().required(),
-      price: Joi.number().required().min(0)
-    }).required()
-  });
-
-  const { error } = placeSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map(e => e.message).join(',');
-    throw new ExpressError(msg, 400);
-  }
-
+app.post('/places', validatePlace, asyncWrapper(async (req, res, next) => {
   const place = new Place(req.body.place);
   await place.save();
   res.redirect(`/places/${place._id}`);
@@ -74,7 +67,7 @@ app.get('/places/:id/edit', asyncWrapper(async (req, res) => {
   res.render('places/edit', { place });
 }));
 
-app.put('/places/:id', asyncWrapper(async (req, res) => {
+app.put('/places/:id', validatePlace, asyncWrapper(async (req, res) => {
   const { id } = req.params;
   const place = await Place.findByIdAndUpdate(id, { ...req.body.place });
   res.redirect(`/places/${place._id}`);

@@ -5,6 +5,7 @@ import ejsMate from 'ejs-mate';
 import Place from './models/place.js';
 import asyncWrapper from './helpers/asyncWrapper.js';
 import ExpressError from './helpers/ExpressError.js';
+import Joi from 'joi';
 
 mongoose.set('strictQuery', false);
 
@@ -41,6 +42,23 @@ app.get('/places/new', (req, res) => {
 });
 
 app.post('/places', asyncWrapper(async (req, res, next) => {
+
+  const placeSchema = Joi.object({
+    place: Joi.object({
+      name: Joi.string().required(),
+      description: Joi.string().required(),
+      location: Joi.string().required(),
+      image: Joi.string().required(),
+      price: Joi.number().required().min(0)
+    }).required()
+  });
+
+  const { error } = placeSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(e => e.message).join(',');
+    throw new ExpressError(msg, 400);
+  }
+
   const place = new Place(req.body.place);
   await place.save();
   res.redirect(`/places/${place._id}`);
@@ -74,7 +92,7 @@ app.all('*', (req, res, next) => {
 
 app.use((err, req, res, next) => {
   const { status = 500 } = err;
-  if(!err.message) err.message = 'Oh Snap!!! Something went wrong';
+  if (!err.message) err.message = 'Oh Snap!!! Something went wrong';
   res.status(status).render('error', { err });
 });
 

@@ -4,6 +4,7 @@ import methodOverride from 'method-override';
 import ejsMate from 'ejs-mate';
 import Place from './models/place.js';
 import asyncWrapper from './helpers/asyncWrapper.js';
+import ExpressError from './helpers/ExpressError.js';
 
 mongoose.set('strictQuery', false);
 
@@ -67,8 +68,14 @@ app.delete('/places/:id', asyncWrapper(async (req, res) => {
   res.redirect('/places');
 }));
 
+app.all('*', (req, res, next) => {
+  next(new ExpressError('Page Not Found', 404));
+});
+
 app.use((err, req, res, next) => {
-  res.send('Something went wrong');
+  const { status = 500 } = err;
+  if(!err.message) err.message = 'Oh Snap!!! Something went wrong';
+  res.status(status).render('error', { err });
 });
 
 app.listen(3000, () => {
